@@ -2,6 +2,7 @@ argparse
 art
 matplotlib
 numpy
+pandas
 torch
 sklearn
 skorch
