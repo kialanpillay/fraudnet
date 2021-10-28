@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -30,10 +31,10 @@ class Model1(nn.Module):
         if self.batch_norm:
             return self.layers(x)
         else:
-            x = F.relu(self.fc2(x))
+            x = F.relu(self.fc1(x))
             x = F.relu(self.fc2(x))
             x = F.relu(self.fc3(x))
-            x = F.sigmoid(self.output_layer(x))
+            x = torch.sigmoid(self.output_layer(x))
             return x
 
 
@@ -54,7 +55,7 @@ class Model2(nn.Module):
         x = F.relu(self.fc3(x))
         x = F.relu(self.fc4(x))
         x = F.relu(self.fc5(x))
-        x = F.sigmoid(self.output_layer(x))
+        x = torch.sigmoid(self.output_layer(x))
         return x
 
 
@@ -78,5 +79,5 @@ class Model3(nn.Module):
         x = F.relu(self.fc5(x))
         x = F.relu(self.fc6(x))
         x = F.relu(self.fc7(x))
-        x = F.sigmoid(self.output_layer(x))
+        x = torch.sigmoid(self.output_layer(x))
         return x
