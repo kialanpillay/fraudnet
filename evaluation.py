@@ -26,8 +26,11 @@ def validate(model, dataset, args):
     print()
 
 
-def validate_baseline(clf, X, y):
-    print("\nValidation Set Performance")
+def validate_baseline(clf, X, y, clf_name):
+    print()
+    print(clf_name)
+    print("-"*26)
+    print("Validation Set Performance")
     print('{:<15s} : {:5.6f}'.format("Balanced Acc.", balanced_accuracy_score(y, clf.predict(X))))
     print('{:<15s} : {:5.6f}'.format("ROC AUC", roc_auc_score(y, clf.predict(X))))
     print()
