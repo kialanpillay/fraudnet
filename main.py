@@ -10,10 +10,11 @@ def app():
     print("FraudNet")
     X_train, y_train, X_val, y_val, X_test, y_test = preprocessing.partition()
     train_dataset = preprocessing.Dataset(X_train, y_train)
+    val_dataset = preprocessing.Dataset(X_val, y_val)
     model = models.nn.Model1(X_train.shape[1], args.hidden_dim, args.batch_norm)
     try:
         t1 = datetime.now().timestamp()
-        train(model, train_dataset, args)
+        train(model, train_dataset, val_dataset, args)
         t2 = datetime.now().timestamp()
         time(t1, t2)
     except KeyboardInterrupt:
