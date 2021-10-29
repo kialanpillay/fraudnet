@@ -10,13 +10,13 @@ class Model1(nn.Module):
         if batch_norm:
             self.layers = nn.Sequential(
                 nn.Linear(input_dim, hidden_dim),
-                nn.BatchNorm1d(64),
+                nn.BatchNorm1d(hidden_dim),
                 nn.ReLU(),
                 nn.Linear(hidden_dim, hidden_dim),
-                nn.BatchNorm1d(64),
+                nn.BatchNorm1d(hidden_dim),
                 nn.ReLU(),
                 nn.Linear(hidden_dim, hidden_dim),
-                nn.BatchNorm1d(64),
+                nn.BatchNorm1d(hidden_dim),
                 nn.ReLU(),
                 nn.Linear(hidden_dim, 1),
                 nn.Sigmoid(),
@@ -98,7 +98,7 @@ class FeedForwardNeuralNetwork(nn.Module):
             modules.append(nn.Sigmoid())
             self.layers = nn.Sequential(*modules)
         else:
-            modules = [nn.Linear(input_dim, hidden_dim), nn.BatchNorm1d(64), nn.ReLU()]
+            modules = [nn.Linear(input_dim, hidden_dim), nn.BatchNorm1d(hidden_dim), nn.ReLU()]
             for i in range(num_layers - 1):
                 modules.append(nn.Linear(hidden_dim, hidden_dim))
                 modules.append(nn.ReLU())
