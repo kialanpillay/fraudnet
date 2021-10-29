@@ -21,3 +21,9 @@ def validate(model, dataset, args):
     print("\nValidation Set Performance")
     print('{:<15s} : {:5.6f}'.format("Balanced Acc.", balanced_accuracy_score(y_true, y_pred)))
     print()
+
+
+def validate_baseline(clf, X, y):
+    print("\nValidation Set Performance")
+    print('{:<15s} : {:5.6f}'.format("Balanced Acc.", balanced_accuracy_score(y, clf.predict(X))))
+    print()

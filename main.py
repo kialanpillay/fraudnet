@@ -1,6 +1,8 @@
 import argparse
 from datetime import datetime
 
+import baseline
+import evaluation
 import models.nn
 import preprocessing
 from engine import train
@@ -11,7 +13,13 @@ def app():
     X_train, y_train, X_val, y_val, X_test, y_test = preprocessing.partition()
     train_dataset = preprocessing.Dataset(X_train, y_train)
     val_dataset = preprocessing.Dataset(X_val, y_val)
+
+    clf = baseline.NaiveClassifier()
+    clf.fit(X_train, y_train)
+    evaluation.validate_baseline(clf, X_val, y_val)
+
     model = models.nn.Model1(X_train.shape[1], args.hidden_dim, args.batch_norm)
+
     try:
         t1 = datetime.now().timestamp()
         train(model, train_dataset, val_dataset, args)
