@@ -2,7 +2,6 @@ import argparse
 import os.path
 from functools import partial
 
-import numpy as np
 from ray import tune
 from datetime import datetime
 
@@ -50,17 +49,6 @@ def app():
                     "batch_size": tune.grid_search([16, 32, 64]),
                     "batch_norm": tune.grid_search([True, False]),
                     "hidden_dim": tune.grid_search([16, 32, 64]),
-                    "hidden_layers": tune.grid_search([3, 5, 7]),
-                }
-                config = {
-                    "hyper_opt": args.hyper_opt,
-                    "num_epochs": args.num_epochs,
-                    "input_dim": X.shape[1],
-                    "lr": args.lr,
-                    "weight_decay": args.weight_decay,
-                    "batch_size": args.batch_size,
-                    "batch_norm": args.batch_norm,
-                    "hidden_dim": args.hidden_dim,
                     "hidden_layers": tune.grid_search([3, 5, 7]),
                 }
                 filepath = os.path.join(os.getcwd(), 'data/creditcard.csv')
