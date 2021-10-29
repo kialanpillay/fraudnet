@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from sklearn.metrics import balanced_accuracy_score
+from sklearn.metrics import balanced_accuracy_score, roc_auc_score
 
 
 def validate(model, dataset, args):
@@ -9,6 +9,7 @@ def validate(model, dataset, args):
 
     y_true = []
     y_pred = []
+    model.eval()
     with torch.no_grad():
         for i, (inputs, targets) in enumerate(loader, 0):
             outputs = model(inputs).numpy()
@@ -20,10 +21,12 @@ def validate(model, dataset, args):
     y_pred = np.concatenate(y_pred)
     print("\nValidation Set Performance")
     print('{:<15s} : {:5.6f}'.format("Balanced Acc.", balanced_accuracy_score(y_true, y_pred)))
+    print('{:<15s} : {:5.6f}'.format("ROC AUC", roc_auc_score(y_true, y_pred)))
     print()
 
 
 def validate_baseline(clf, X, y):
     print("\nValidation Set Performance")
     print('{:<15s} : {:5.6f}'.format("Balanced Acc.", balanced_accuracy_score(y, clf.predict(X))))
+    print('{:<15s} : {:5.6f}'.format("ROC AUC", roc_auc_score(y, clf.predict(X))))
     print()

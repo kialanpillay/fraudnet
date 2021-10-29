@@ -18,7 +18,7 @@ def app():
     clf.fit(X_train, y_train)
     evaluation.validate_baseline(clf, X_val, y_val)
 
-    model = models.nn.Model1(X_train.shape[1], args.hidden_dim, args.batch_norm)
+    model = models.nn.FeedForwardNeuralNetwork(X_train.shape[1], args.hidden_dim, 3, args.batch_norm)
 
     try:
         t1 = datetime.now().timestamp()
