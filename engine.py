@@ -1,19 +1,25 @@
 import torch
 import torch.nn as nn
 import torch.utils.data
+from ray import tune
 
+from models.nn import FeedForwardNeuralNetwork
 from evaluation import validate
+from preprocessing import get_data_loaders
 
 
-def train(model, train_dataset, validation_dataset, args):
+def train(config, filepath='./data/creditcard.csv', verbose=False):
+    model = FeedForwardNeuralNetwork(config['input_dim'], config['hidden_dim'], config['hidden_layers'],
+                                     config['batch_norm'])
+
     criterion = nn.BCELoss()
 
-    train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=args.batch_size, shuffle=False)
+    train_loader, val_loader, _ = get_data_loaders(filepath, config['batch_size'])
 
-    optimizer = torch.optim.RMSprop(model.parameters(), lr=args.lr)
-    for epoch in range(args.num_epochs):
-        print('Epoch {:2d}'.format(epoch + 1))
+    optimizer = torch.optim.RMSprop(model.parameters(), lr=config['lr'], weight_decay=config['weight_decay'])
+    for epoch in range(config['num_epochs']):
+        if verbose:
+            print('Epoch {:2d}'.format(epoch + 1))
         for i, (inputs, targets) in enumerate(train_loader):
             optimizer.zero_grad()
             outputs = model(inputs)
@@ -21,7 +27,15 @@ def train(model, train_dataset, validation_dataset, args):
             loss.backward()
             optimizer.step()
 
-            if i % 500 == 0:
+            if i % 500 == 0 and verbose:
                 print('Iteration {:<4d}  | Loss: {:5.6f}'.format(i, loss.item()))
 
-        validate(model, validation_dataset, args)
+        val_loss, metrics = validate(model, val_loader)
+        if verbose:
+            print("\nValidation Set Performance")
+            print('{:<15s} : {:5.6f}'.format("Loss", val_loss)),
+            print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
+            print('{:<15s} : {:5.6f}'.format("ROC AUC", metrics['roc_auc_score']))
+
+        if config['hyper_opt']:
+            tune.report(loss=val_loss, balanced_accuracy=metrics['balanced_accuracy'])

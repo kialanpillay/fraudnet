@@ -3,7 +3,8 @@ art
 matplotlib
 numpy
 pandas
-torch
+ray[tune]
 scipy
 sklearn
 skorch
+torch
