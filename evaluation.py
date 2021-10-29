@@ -1,5 +1,6 @@
 import numpy as np
 import torch
+import torch.utils.data
 from sklearn.metrics import balanced_accuracy_score, roc_auc_score
 
 
@@ -11,7 +12,7 @@ def validate(model, dataset, args):
     y_pred = []
     model.eval()
     with torch.no_grad():
-        for i, (inputs, targets) in enumerate(loader, 0):
+        for i, (inputs, targets) in enumerate(loader):
             outputs = model(inputs).numpy()
             outputs = [1 if o >= 0.5 else 0 for o in outputs]
             y_true.append(targets.numpy())
