@@ -1,10 +1,9 @@
 import argparse
 import os.path
+from datetime import datetime
 from functools import partial
 
 from ray import tune
-from datetime import datetime
-
 from ray.tune import CLIReporter
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler

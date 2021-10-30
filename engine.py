@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.utils.data
 from ray import tune
 
-from models.nn import FeedForwardNeuralNetwork
 from evaluation import validate
+from models.nn import FeedForwardNeuralNetwork
 from preprocessing import get_data_loaders
 
 
