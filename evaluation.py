@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.utils.data
-from sklearn.metrics import balanced_accuracy_score, roc_auc_score
+from sklearn.metrics import balanced_accuracy_score
 
 
 def validate(model, loader):
@@ -27,10 +27,8 @@ def validate(model, loader):
     loss = val_loss / val_steps
     y_true = np.concatenate(y_true)
     y_pred = np.concatenate(y_pred)
-    return loss, {'balanced_accuracy': balanced_accuracy_score(y_true, y_pred),
-                  'roc_auc_score': roc_auc_score(y_true, y_pred)}
+    return loss, {'balanced_accuracy': balanced_accuracy_score(y_true, y_pred)}
 
 
 def validate_baseline(clf, X, y):
-    return {'balanced_accuracy': balanced_accuracy_score(y, clf.predict(X)),
-            'roc_auc_score': roc_auc_score(y, clf.predict(X))}
+    return {'balanced_accuracy': balanced_accuracy_score(y, clf.predict(X))}

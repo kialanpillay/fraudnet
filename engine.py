@@ -35,7 +35,6 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
             print("\nValidation Set Performance")
             print('{:<15s} : {:5.6f}'.format("Loss", val_loss)),
             print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
-            print('{:<15s} : {:5.6f}'.format("ROC AUC", metrics['roc_auc_score']))
 
         if config['hyper_opt']:
             tune.report(loss=val_loss, balanced_accuracy=metrics['balanced_accuracy'])

@@ -83,7 +83,6 @@ def printer(clf_name, partition, metrics):
     print("-" * 26)
     print("{} Set Performance".format(partition))
     print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_acc']))
-    print('{:<15s} : {:5.6f}'.format("ROC AUC", metrics['roc_auc_score']))
 
 
 def time(t1, t2):
