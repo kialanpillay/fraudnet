@@ -41,6 +41,7 @@ def app():
             t1 = datetime.now().timestamp()
             if args.hyper_opt:
                 config = {
+                    "hyper_opt": args.hyper_opt,
                     "num_epochs": args.num_epochs,
                     "input_dim": X.shape[1],
                     "lr": tune.loguniform(1e-4, 1e-1),
