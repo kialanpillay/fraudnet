@@ -98,7 +98,7 @@ if __name__ == "__main__":
     parser.add_argument('--hyper_opt', action='store_true')
     parser.add_argument('--verbose', action='store_true')
     parser.add_argument('--baseline', action='store_true')
-    parser.add_argument('--num_epochs', type=int, default=2)
+    parser.add_argument('--num_epochs', type=int, default=50)
     parser.add_argument('--lr', type=float, default=1e-4)
     parser.add_argument('--weight_decay', type=float, default=1e-5)
     parser.add_argument('--batch_size', type=int, default=32)
