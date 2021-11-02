@@ -47,7 +47,7 @@ def app():
                     "weight_decay": tune.loguniform(1e-5, 1e-3),
                     "batch_size": tune.grid_search([16, 32, 64]),
                     "batch_norm": tune.grid_search([True, False]),
-                    "hidden_dim": tune.grid_search([20, 26, 32, 40, 64, 100]),
+                    "hidden_dim": tune.grid_search([10,16,32,50,64,100]),
                     "hidden_layers": tune.grid_search([3, 4, 5]),
                 }
                 filepath = os.path.join(os.getcwd(), 'data/creditcard.csv')
