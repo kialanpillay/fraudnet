@@ -18,6 +18,8 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
 
     optimizer = torch.optim.RMSprop(model.parameters(), lr=config['lr'], weight_decay=config['weight_decay'])
     for epoch in range(config['num_epochs']):
+        train_loss = 0.0
+        train_steps = 0
         if verbose:
             print('Epoch {:2d}'.format(epoch + 1))
         for i, (inputs, targets) in enumerate(train_loader):
@@ -27,8 +29,15 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
             loss.backward()
             optimizer.step()
 
+            train_loss += loss.item()
+            train_steps += 1
+
             if i % 500 == 0 and verbose:
                 print('Iteration {:<4d}  | Loss: {:5.6f}'.format(i, loss.item()))
+
+        if verbose:
+            print("\nTrain Set Performance")
+            print('{:<15s} : {:5.6f}'.format("Loss", train_loss / train_steps)),
 
         val_loss, metrics = validate(model, val_loader)
         if verbose:
