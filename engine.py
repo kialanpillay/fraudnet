@@ -9,9 +9,6 @@ from preprocessing import get_data_loaders
 import matplotlib.pyplot as plt
 
 
-
-val_losses = []
-train_losses = []
 def train(config, filepath='./data/creditcard.csv', verbose=False):
     model = FeedForwardNeuralNetwork(config['input_dim'], config['hidden_dim'], config['hidden_layers'],
                                      config['batch_norm'])
@@ -21,6 +18,9 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
     train_loader, val_loader, _ = get_data_loaders(filepath, config['batch_size'])
 
     optimizer = torch.optim.RMSprop(model.parameters(), lr=config['lr'], weight_decay=config['weight_decay'])
+
+    train_losses = []
+    val_losses = []
     for epoch in range(config['num_epochs']):
         train_loss = 0.0
         train_steps = 0
@@ -42,8 +42,9 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
         if verbose:
             print("\nTrain Set Performance")
             print('{:<15s} : {:5.6f}'.format("Loss", train_loss / train_steps)),
-            loss = train_loss / train_steps
-            train_losses.append(loss)
+
+        loss = train_loss / train_steps
+        train_losses.append(loss)
 
         val_loss, metrics = validate(model, val_loader)
         val_losses.append(val_loss)
@@ -55,16 +56,17 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
         if config['hyper_opt']:
             tune.report(loss=val_loss, balanced_accuracy=metrics['balanced_accuracy'])
 
+    plt.figure(figsize=(10, 5))
+    plt.plot(train_losses, label="Train Set Loss")
+    plt.plot(val_losses, label="Validation Set Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Binary Cross-Entropy Loss")
+    plt.legend()
+    plt.xlim([1, config['num_epochs']])
+    plt.savefig('Loss.png')
+    plt.show()
+
     if config['hyper_opt'] is not True:
         return model
-    plt.figure(figsize=(10, 5))
-    plt.title("Training and Validation Loss")
-    plt.plot(val_losses, label="val")
-    plt.plot(train_losses, label="train")
-    plt.xlabel("iterations")
-    plt.ylabel("Loss")
-    plt.legend()
-    plt.savefig('losses.png')
-    plt.show()
 
 
