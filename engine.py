@@ -6,8 +6,12 @@ from ray import tune
 from evaluation import validate
 from models.nn import FeedForwardNeuralNetwork
 from preprocessing import get_data_loaders
+import matplotlib.pyplot as plt
 
 
+
+val_losses = []
+train_losses = []
 def train(config, filepath='./data/creditcard.csv', verbose=False):
     model = FeedForwardNeuralNetwork(config['input_dim'], config['hidden_dim'], config['hidden_layers'],
                                      config['batch_norm'])
@@ -38,8 +42,11 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
         if verbose:
             print("\nTrain Set Performance")
             print('{:<15s} : {:5.6f}'.format("Loss", train_loss / train_steps)),
+            loss = train_loss / train_steps
+            train_losses.append(loss)
 
         val_loss, metrics = validate(model, val_loader)
+        val_losses.append(val_loss)
         if verbose:
             print("\nValidation Set Performance")
             print('{:<15s} : {:5.6f}'.format("Loss", val_loss)),
@@ -50,3 +57,14 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
 
     if config['hyper_opt'] is not True:
         return model
+    plt.figure(figsize=(10, 5))
+    plt.title("Training and Validation Loss")
+    plt.plot(val_losses, label="val")
+    plt.plot(train_losses, label="train")
+    plt.xlabel("iterations")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.savefig('losses.png')
+    plt.show()
+
+

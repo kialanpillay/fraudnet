@@ -112,7 +112,7 @@ def printer(clf_name, partition, metrics):
     print("\n{}".format(clf_name))
     print("-" * 26)
     print("{} Set Performance".format(partition))
-    print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_acc']))
+    print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
 
 
 def time(t1, t2):
