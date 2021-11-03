@@ -23,10 +23,12 @@ def app():
         clf = make_pipeline(StandardScaler(), baseline.NaiveClassifier())
         t1 = datetime.now().timestamp()
         clf.fit(X_train, y_train)
-        metrics = evaluation.validate_baseline(clf, X_val, y_val)
-        printer("Naive Classifier", "Validation", metrics)
         t2 = datetime.now().timestamp()
         time(t1, t2)
+        metrics = evaluation.validate_baseline(clf, X_val, y_val)
+        printer("Naive Classifier", "Validation", metrics)
+        metrics = evaluation.validate_baseline(clf, X_test, y_test)
+        printer("Naive Classifier", "Test", metrics)
 
         svc = make_pipeline(StandardScaler(), LinearSVC(max_iter=1000))
         t1 = datetime.now().timestamp()
@@ -35,6 +37,8 @@ def app():
         time(t1, t2)
         metrics = evaluation.validate_baseline(svc, X_val, y_val)
         printer("Support Vector Classifier", "Validation", metrics)
+        metrics = evaluation.validate_baseline(svc, X_test, y_test)
+        printer("Support Vector Classifier", "Test", metrics)
 
     if args.train:
         try:
@@ -127,7 +131,7 @@ if __name__ == "__main__":
     parser.add_argument('--baseline', action='store_true')
     parser.add_argument('--num_epochs', type=int, default=50)
     parser.add_argument('--lr', type=float, default=1e-4)
-    parser.add_argument('--weight_decay', type=float, default=1e-5)
+    parser.add_argument('--weight_decay', type=float, default=0)
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--batch_norm', action='store_true')
     parser.add_argument('--hidden_dim', type=int, default=64)
