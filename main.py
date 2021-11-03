@@ -134,7 +134,7 @@ if __name__ == "__main__":
     parser.add_argument('--weight_decay', type=float, default=0)
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--batch_norm', action='store_true')
-    parser.add_argument('--hidden_dim', type=int, default=64)
+    parser.add_argument('--hidden_dim', type=int, default=10)
     parser.add_argument('--hidden_layers', type=int, default=3)
     args = parser.parse_args()
     app()
