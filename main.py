@@ -78,6 +78,31 @@ def app():
         except KeyboardInterrupt:
             print("Exiting Early")
 
+    if args.test:
+        config = {
+            "hyper_opt": args.hyper_opt,
+            "num_epochs": args.num_epochs,
+            "input_dim": X.shape[1],
+            "lr": args.lr,
+            "weight_decay": args.weight_decay,
+            "batch_size": args.batch_size,
+            "batch_norm": args.batch_norm,
+            "hidden_dim": args.hidden_dim,
+            "hidden_layers": args.hidden_layers,
+        }
+
+        t1 = datetime.now().timestamp()
+        model = engine.train(config, verbose=args.verbose)
+        t2 = datetime.now().timestamp()
+        time(t1, t2)
+
+        _, _, test_loader = preprocessing.get_data_loaders(filepath='./data/creditcard.csv',
+                                                           batch_size=config['batch_size'])
+        test_loss, metrics = evaluation.validate(model, test_loader)
+        print("\nTest Set Performance")
+        print('{:<15s} : {:5.6f}'.format("Loss", test_loss)),
+        print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
+
 
 def printer(clf_name, partition, metrics):
     print("\n{}".format(clf_name))
@@ -97,6 +122,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--train', action='store_true')
     parser.add_argument('--hyper_opt', action='store_true')
+    parser.add_argument('--test', action='store_true')
     parser.add_argument('--verbose', action='store_true')
     parser.add_argument('--baseline', action='store_true')
     parser.add_argument('--num_epochs', type=int, default=50)

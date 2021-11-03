@@ -38,3 +38,6 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
 
         if config['hyper_opt']:
             tune.report(loss=val_loss, balanced_accuracy=metrics['balanced_accuracy'])
+
+    if config['hyper_opt'] is not True:
+        return model
