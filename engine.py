@@ -56,9 +56,10 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
         if config['hyper_opt']:
             tune.report(loss=val_loss, balanced_accuracy=metrics['balanced_accuracy'])
 
-    print("\nValidation Set Performance")
-    print('{:<15s} : {:5.6f}'.format("Loss", val_loss)),
-    print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
+    if not verbose and not config['hyper_opt']:
+        print("\nValidation Set Performance ({} Epochs)".format(config['num_epochs']))
+        print('{:<15s} : {:5.6f}'.format("Loss", val_loss)),
+        print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
 
     if config['graph']:
         plt.figure(figsize=(10, 5))
