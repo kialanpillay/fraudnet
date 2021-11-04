@@ -27,8 +27,6 @@ def load_data(filepath='./data/creditcard.csv'):
     df = pd.read_csv(filepath)
     X = df.drop(['Time', 'Class'], axis=1).values.astype(np.float32)
     y = df['Class'].values.astype(np.float32).reshape(-1, 1)
-    scaler = StandardScaler()
-    X = scaler.fit_transform(X)
     return X, y
 
 
@@ -42,7 +40,7 @@ def partition(X, y, train_ratio=0.6, validation_ratio=0.2, test_ratio=0.2):
 
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, X, y):
-        self.X = X
+        self.X = StandardScaler().fit_transform(X)
         self.y = y
 
     def __len__(self):
