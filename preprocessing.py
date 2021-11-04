@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import torch.utils.data
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 
 def get_data_loaders(filepath, batch_size):
@@ -39,7 +40,7 @@ def partition(X, y, train_ratio=0.6, validation_ratio=0.2, test_ratio=0.2):
 
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, X, y):
-        self.X = X
+        self.X = StandardScaler().fit_transform(X)
         self.y = y
 
     def __len__(self):

@@ -46,6 +46,7 @@ def app():
             if args.hyper_opt:
                 config = {
                     "hyper_opt": args.hyper_opt,
+                    "graph": args.graph,
                     "num_epochs": args.num_epochs,
                     "input_dim": X.shape[1],
                     "lr": tune.loguniform(1e-4, 1e-1),
@@ -67,6 +68,7 @@ def app():
             else:
                 config = {
                     "hyper_opt": args.hyper_opt,
+                    "graph": args.graph,
                     "num_epochs": args.num_epochs,
                     "input_dim": X.shape[1],
                     "lr": args.lr,
@@ -85,6 +87,7 @@ def app():
     if args.test:
         config = {
             "hyper_opt": args.hyper_opt,
+            "graph": args.graph,
             "num_epochs": args.num_epochs,
             "input_dim": X.shape[1],
             "lr": args.lr,
@@ -112,7 +115,7 @@ def printer(clf_name, partition, metrics):
     print("\n{}".format(clf_name))
     print("-" * 26)
     print("{} Set Performance".format(partition))
-    print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_acc']))
+    print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
 
 
 def time(t1, t2):
@@ -128,13 +131,14 @@ if __name__ == "__main__":
     parser.add_argument('--hyper_opt', action='store_true')
     parser.add_argument('--test', action='store_true')
     parser.add_argument('--verbose', action='store_true')
+    parser.add_argument('--graph', action='store_true')
     parser.add_argument('--baseline', action='store_true')
     parser.add_argument('--num_epochs', type=int, default=50)
     parser.add_argument('--lr', type=float, default=1e-4)
     parser.add_argument('--weight_decay', type=float, default=0)
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--batch_norm', action='store_true')
-    parser.add_argument('--hidden_dim', type=int, default=10)
+    parser.add_argument('--hidden_dim', type=int, default=16)
     parser.add_argument('--hidden_layers', type=int, default=3)
     args = parser.parse_args()
     app()
