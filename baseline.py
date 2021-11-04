@@ -3,6 +3,9 @@ from scipy.stats import stats
 
 
 class NaiveClassifier:
+    """
+    Custom naive classifier. Predicts the modal class label.
+    """
     def __init__(self):
         self.y_pred = None
 

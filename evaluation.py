@@ -7,6 +7,22 @@ from sklearn.metrics import balanced_accuracy_score
 
 
 def validate(model, loader, save=False):
+    """
+    Computes evaluation metrics for a PyTorch model
+
+    Parameters
+    ----------
+    model: models.nn.FeedForwardNeuralNetwork
+        Trained feed-forward neural network model
+    loader: torch.utils.data.DataLoader
+        Iterable dataloader
+    save: float, optional
+        Save model predictions to .csv
+
+    Returns
+    -------
+    dict
+    """
     criterion = nn.BCELoss()
     val_loss = 0.0
     val_steps = 0
@@ -35,4 +51,20 @@ def validate(model, loader, save=False):
 
 
 def validate_baseline(clf, X, y):
+    """
+    Computes evaluation metrics for a baseline classifier
+
+    Parameters
+    ----------
+    clf: baseline.NaiveClassifier, sklearn.svm.LinearSVC
+        Fitted classifier
+    X: numpy.ndarray
+        Features
+    y: float, optional
+        Class labels
+
+    Returns
+    -------
+    dict
+    """
     return {'balanced_accuracy': balanced_accuracy_score(y, clf.predict(X))}
