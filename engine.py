@@ -56,15 +56,20 @@ def train(config, filepath='./data/creditcard.csv', verbose=False):
         if config['hyper_opt']:
             tune.report(loss=val_loss, balanced_accuracy=metrics['balanced_accuracy'])
 
-    plt.figure(figsize=(10, 5))
-    plt.plot(train_losses, label="Train Set Loss")
-    plt.plot(val_losses, label="Validation Set Loss")
-    plt.xlabel("Epoch")
-    plt.ylabel("Binary Cross-Entropy Loss")
-    plt.legend()
-    plt.xlim([1, config['num_epochs']])
-    plt.savefig('Loss.png')
-    plt.show()
+    print("\nValidation Set Performance")
+    print('{:<15s} : {:5.6f}'.format("Loss", val_loss)),
+    print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
+
+    if config['graph']:
+        plt.figure(figsize=(10, 5))
+        plt.plot(train_losses, label="Train Set Loss")
+        plt.plot(val_losses, label="Validation Set Loss")
+        plt.xlabel("Epoch")
+        plt.ylabel("Binary Cross-Entropy Loss")
+        plt.legend()
+        plt.xlim([1, config['num_epochs']])
+        plt.savefig('Loss.png')
+        plt.show()
 
     if config['hyper_opt'] is not True:
         return model
