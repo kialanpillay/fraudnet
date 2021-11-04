@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import torch.utils.data
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 
 def get_data_loaders(filepath, batch_size):
@@ -26,6 +27,8 @@ def load_data(filepath='./data/creditcard.csv'):
     df = pd.read_csv(filepath)
     X = df.drop(['Time', 'Class'], axis=1).values.astype(np.float32)
     y = df['Class'].values.astype(np.float32).reshape(-1, 1)
+    scaler = StandardScaler()
+    X = scaler.fit_transform(X)
     return X, y
 
 
