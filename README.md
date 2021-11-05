@@ -46,6 +46,17 @@ Run `main.py` with the `--train` and `--hyper_opt` flags to perform tuning. Note
 python3 main.py --train --hyper_opt
 ```
 
+### Optimal Configuration
+| Hyperparameter      | Value   |
+|---------------------|---------|
+| Epochs              | 50      |
+| Learning Rate       | 0.0005  |
+| Weight Decay        | 0.00002 |
+| Batch Size          | 64      |
+| Batch Normalisation | True    |
+| Hidden Nodes        | 64      |
+| Hidden Layers       | 5       |
+
 ## Model Evaluation
 
 Run `main.py` with the `--test` flag and to train and evaluate a model on the test set. Specify hyperparameters as above.
