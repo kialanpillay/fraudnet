@@ -75,7 +75,7 @@ def partition(X, y, train_ratio=0.6, validation_ratio=0.2, test_ratio=0.2):
 
     Returns
     -------
-    (numpy.ndarray, numpy.ndarray)
+    (numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray)
     """
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1 - train_ratio, random_state=1)
     X_val, X_test, y_val, y_test = train_test_split(X_test, y_test,
