@@ -10,6 +10,22 @@ import matplotlib.pyplot as plt
 
 
 def train(config, filepath='./data/creditcard.csv', verbose=False):
+    """
+    Train a PyTorch model
+
+    Parameters
+    ----------
+    config : dict
+       Training configuration
+    filepath: str, optional
+        Dataset filepath
+    verbose: bool, optional
+        Print per-epoch metrics
+
+    Returns
+    -------
+    FeedForwardNeuralNetwork
+    """
     model = FeedForwardNeuralNetwork(config['input_dim'], config['hidden_dim'], config['hidden_layers'],
                                      config['batch_norm'])
 

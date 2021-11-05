@@ -105,7 +105,7 @@ def app():
 
         _, _, test_loader = preprocessing.get_data_loaders(filepath='./data/creditcard.csv',
                                                            batch_size=config['batch_size'])
-        test_loss, metrics = evaluation.validate(model, test_loader)
+        test_loss, metrics = evaluation.validate(model, test_loader, args.save)
         print("\nTest Set Performance")
         print('{:<15s} : {:5.6f}'.format("Loss", test_loss)),
         print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
@@ -132,6 +132,7 @@ if __name__ == "__main__":
     parser.add_argument('--test', action='store_true')
     parser.add_argument('--verbose', action='store_true')
     parser.add_argument('--graph', action='store_true')
+    parser.add_argument('--save', action='store_true')
     parser.add_argument('--baseline', action='store_true')
     parser.add_argument('--num_epochs', type=int, default=50)
     parser.add_argument('--lr', type=float, default=1e-4)

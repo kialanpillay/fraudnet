@@ -2,6 +2,9 @@ import torch.nn as nn
 
 
 class FeedForwardNeuralNetwork(nn.Module):
+    """
+    Feed-forward neural network model for binary classification. Supports batch normalisation layers
+    """
     def __init__(self, input_dim, hidden_dim=64, hidden_layers=3, batch_norm=False):
         super(FeedForwardNeuralNetwork, self).__init__()
         self.num_layers = hidden_layers
