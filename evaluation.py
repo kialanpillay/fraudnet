@@ -46,7 +46,7 @@ def validate(model, loader, save=False):
     y_pred = np.concatenate(y_pred)
 
     if save:
-        pd.DataFrame(y_pred, columns=['Predictions']).to_csv('predictions.csv')
+        pd.DataFrame(y_pred, columns=['Predictions']).to_csv('predictions.csv', index=False)
     return loss, {'balanced_accuracy': balanced_accuracy_score(y_true, y_pred)}
 
 
