@@ -105,7 +105,10 @@ def app():
 
         _, _, test_loader = preprocessing.get_data_loaders(filepath='./data/creditcard.csv',
                                                            batch_size=config['batch_size'])
+        t1 = datetime.now().timestamp()
         test_loss, metrics = evaluation.validate(model, test_loader, args.save)
+        t2 = datetime.now().timestamp()
+        time(t1, t2)
         print("\nTest Set Performance")
         print('{:<15s} : {:5.6f}'.format("Loss", test_loss)),
         print('{:<15s} : {:5.6f}'.format("Balanced Acc.", metrics['balanced_accuracy']))
