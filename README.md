@@ -68,7 +68,7 @@ python3 main.py --test
 Add the `--save` flag to write the model test set predictions to a `.csv` file.
 
 ```
-python3 main.py --train --save
+python3 main.py --test --save
 ```
 
 
