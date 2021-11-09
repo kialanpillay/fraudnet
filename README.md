@@ -88,9 +88,9 @@ python3 main.py --test --save
 
 The full dataset is included to allow for training and evaluating custom models and hyperparameter tuning.
 
-The `train_test_split` method has a fixed random_state to ensure deterministic partitioning of the dataset. To reproduce
-the final validation and test set results, run the following command. It is recommended that this is performed multiple
-times to reduce variance.
+The `train_test_split` method has a fixed random state (seed) to ensure deterministic partitioning of the dataset. To reproduce
+the final validation and test set results, run the following command. It is recommended that model evaluation is performed multiple
+times to reduce experimental variance.
 
 ```
 python3 main.py --test --num_epochs 50 --lr 0.0005 --weight_decay 0.00002 --batch_size 64 --hidden_dim 64 --hidden_layers 5 --batch_norm --verbose
