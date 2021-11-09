@@ -3,6 +3,7 @@ import os.path
 from datetime import datetime
 from functools import partial
 
+from art import tprint
 from ray import tune
 from ray.tune import CLIReporter
 from sklearn.pipeline import make_pipeline
@@ -16,6 +17,11 @@ import preprocessing
 
 
 def app():
+    tprint("FraudNet")
+    print("Credit Card Fraud Detection")
+    print("-" * 32)
+    print()
+
     X, y = preprocessing.load_data()
     X_train, y_train, X_val, y_val, X_test, y_test = preprocessing.partition(X, y)
 
@@ -128,7 +134,6 @@ def time(t1, t2):
 
 
 if __name__ == "__main__":
-    print("FraudNet")
     parser = argparse.ArgumentParser()
     parser.add_argument('--train', action='store_true')
     parser.add_argument('--hyper_opt', action='store_true')

@@ -3,7 +3,7 @@ art
 matplotlib
 numpy
 pandas
-ray[tune]
+ray
 scipy
 sklearn
 skorch
