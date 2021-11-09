@@ -7,4 +7,5 @@ ray
 requests
 scipy
 sklearn
+tensorboardX
 torch
