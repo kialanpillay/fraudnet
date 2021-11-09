@@ -2,6 +2,9 @@ import argparse
 import os.path
 from datetime import datetime
 from functools import partial
+from warnings import simplefilter
+
+from sklearn.exceptions import ConvergenceWarning
 
 from art import tprint
 from ray import tune
@@ -26,6 +29,7 @@ def app():
     X_train, y_train, X_val, y_val, X_test, y_test = preprocessing.partition(X, y)
 
     if args.baseline:
+        print("Naive Classifier Fit")
         clf = make_pipeline(StandardScaler(), baseline.NaiveClassifier())
         t1 = datetime.now().timestamp()
         clf.fit(X_train, y_train)
@@ -36,6 +40,7 @@ def app():
         metrics = evaluation.validate_baseline(clf, X_test, y_test)
         printer("Naive Classifier", "Test", metrics)
 
+        print("Support Vector Classifier Fit")
         svc = make_pipeline(StandardScaler(), LinearSVC(max_iter=1000))
         t1 = datetime.now().timestamp()
         svc.fit(X_train, y_train.ravel())
@@ -134,6 +139,7 @@ def time(t1, t2):
 
 
 if __name__ == "__main__":
+    simplefilter("ignore", category=ConvergenceWarning)
     parser = argparse.ArgumentParser()
     parser.add_argument('--train', action='store_true')
     parser.add_argument('--hyper_opt', action='store_true')
