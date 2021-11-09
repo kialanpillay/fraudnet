@@ -19,18 +19,21 @@ python3 main.py --baseline
 
 ## Model Training
 
-Run `main.py` with the following arguments to train the model with the desired hyperparameter configuration.
+Run `main.py` with `--train` and the following arguments to train the model with the desired hyperparameter configuration.
 ```
 python3 main.py --train --num_epochs 100 --lr 0.001 --weight_decay 0.0001 --batch_size 32 --batch_norm --hidden_dim 32 --hidden layers 4
 ```
 
-Run `main.py` with the `--train` flag to train the default (initial) feed-forward neural network model. 
-
-Remove the `--verbose` flag to only print final validation set metrics. 
-
+Run `main.py` with the `--train` flag only to train the default (initial) feed-forward neural network model. 
 ```
 python3 main.py --train --verbose
 ```
+
+Remove the `--verbose` flag to only print final validation set metrics. 
+```
+python3 main.py --train
+```
+
 
 Add the `--graph` flag to generate a train/validation set loss graph.
 
@@ -59,7 +62,7 @@ python3 main.py --train --hyper_opt
 
 ## Model Evaluation
 
-Run `main.py` with the `--test` flag and to train and evaluate a model on the test set. Specify hyperparameters as above.
+Run `main.py` with the `--test` flag and to train a model and evaluate it on the test set. Specify hyperparameters as above.
 
 ```
 python3 main.py --test
